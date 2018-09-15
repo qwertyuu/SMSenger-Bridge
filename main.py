@@ -30,7 +30,7 @@ if __name__ == '__main__':
         from_number,
         to_number
     )
-    sms_listener = SMSListener(fbmessenger, tClient, from_number, to_number)
+    sms_listener = SMSListener(fbmessenger)
     flask.add_url_rule('/sms', view_func=sms_listener.sms_event)
     t1 = threading.Thread(target=sms_to_messenger, args=[flask])
     t2 = threading.Thread(target=messenger_to_sms, args=[fbmessenger])

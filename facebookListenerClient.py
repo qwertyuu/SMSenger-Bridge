@@ -1,5 +1,4 @@
 from fbchat import Client as fbChatClient, ThreadType, Message
-from pprint import pprint
 
 
 class FacebookListenerClient(fbChatClient):
@@ -13,12 +12,7 @@ class FacebookListenerClient(fbChatClient):
 
     def onMessage(self, mid=None, author_id=None, message=None, message_object=None, thread_id=None,
                   thread_type=ThreadType.USER, ts=None, metadata=None, msg=None):
-        """
 
-        :param metadata:
-        :param thread_type:
-        :type message_object: Message
-        """
         self.markAsDelivered(thread_id, message_object.uid)
         self.markAsRead(thread_id)
 
