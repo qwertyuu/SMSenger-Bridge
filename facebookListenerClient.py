@@ -1,4 +1,4 @@
-from fbchat import Client as fbChatClient, ThreadType, Message
+from fbchat import Client as fbChatClient, ThreadType
 
 
 class FacebookListenerClient(fbChatClient):
