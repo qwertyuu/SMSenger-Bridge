@@ -89,6 +89,10 @@ venv/
 ENV/
 env.bak/
 venv.bak/
+Include/
+Lib/
+Scripts/
+tcl/
 
 # Spyder project settings
 .spyderproject
@@ -105,3 +109,6 @@ venv.bak/
 
 # PyCharm stuff
 .idea/
+
+# pip stuff
+pip-selfcheck.json
