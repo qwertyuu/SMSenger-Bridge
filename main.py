@@ -6,8 +6,8 @@ from twilio.rest import Client as twilioClient
 from smsListener import SMSListener
 
 
-def sms_to_messenger(flask_listener):
-    flask_listener.run(host='0.0.0.0', port='9000', debug=False)
+def sms_to_messenger(flask_listener, host, port):
+    flask_listener.run(host=host, port=port, debug=False)
 
 
 def messenger_to_sms(fb):
@@ -30,9 +30,13 @@ if __name__ == '__main__':
         from_number,
         to_number
     )
-    sms_listener = SMSListener(fbmessenger)
+    sms_listener = SMSListener(fbmessenger, to_number)
     flask.add_url_rule('/sms', view_func=sms_listener.sms_event)
-    t1 = threading.Thread(target=sms_to_messenger, args=[flask])
+    t1 = threading.Thread(target=sms_to_messenger, args=[
+        flask,
+        env.get('FLASK_HOST', '0.0.0.0'),
+        env.get('FLASK_PORT', '5000')
+    ])
     t2 = threading.Thread(target=messenger_to_sms, args=[fbmessenger])
     t1.start()
     t2.start()
