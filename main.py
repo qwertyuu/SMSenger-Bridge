@@ -7,7 +7,7 @@ from smsListener import SMSListener
 
 
 def sms_to_messenger(flask_listener):
-    flask_listener.run()
+    flask_listener.run(host='0.0.0.0', port='9000', debug=False)
 
 
 def messenger_to_sms(fb):
