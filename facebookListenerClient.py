@@ -1,4 +1,5 @@
-from fbchat import Client as fbChatClient, ThreadType
+from fbchat import Client as fbChatClient, ThreadType, Message
+from pprint import pprint
 
 
 class FacebookListenerClient(fbChatClient):
@@ -12,14 +13,19 @@ class FacebookListenerClient(fbChatClient):
 
     def onMessage(self, mid=None, author_id=None, message=None, message_object=None, thread_id=None,
                   thread_type=ThreadType.USER, ts=None, metadata=None, msg=None):
+        """
+
+        :param metadata:
+        :param thread_type:
+        :type message_object: Message
+        """
         self.markAsDelivered(thread_id, message_object.uid)
         self.markAsRead(thread_id)
 
         # If you're not the author, send
         if author_id != self.uid:
             if author_id not in self.usernames:
-                user = self.fetchUserInfo(author_id)[author_id]
-                self.usernames[author_id] = user.name
+                self.usernames[author_id] = self.fetchThreadInfo(thread_id)[thread_id].name
 
             self.twilio_client.messages.create(body="{}: {}".format(self.usernames[author_id], message_object.text),
                                                from_=self.from_number,

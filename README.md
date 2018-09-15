@@ -1,5 +1,10 @@
 # SMSenger Bridge
 
+## Example
+
+![Preview1](./images/woebot.jpg)
+![Preview2](./images/cell.jpg)
+
 ## Prerequisites
 
 - A Twilio account with a static 2-way SMS-enabled phone number (the Account SID and Auth token ready for you to use)
@@ -48,3 +53,4 @@ For now, the next steps for the project are
 4. Find a cheaper SMS provider (with nice APIs available? that'd be rad. I think Amazon SNS supports SMS and is cheaper, might be useful to look into.)
 5. Add tests
 6. Add CI (Circle CI maybe?) for automatic testing
+7. Support group chat

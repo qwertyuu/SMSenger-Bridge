@@ -20,9 +20,11 @@ class SMSListener:
                 search_result = self.messenger.searchForUsers(text_search.group(1))
                 if len(search_result):
                     first_result = search_result[0]
-                    recipient = first_result.uid
+                    self.recipient = first_result.uid
                     self.twilio.messages.create(body="Switched to: {}".format(first_result.name),
                                                 from_=self.from_number,
                                                 to=self.to_number)
-                    self.messenger.send(Message(text=text_search.group(2)), thread_id=recipient)
+            text_to_send = text_search.group(2)
+            if self.recipient and text_to_send:
+                self.messenger.send(Message(text=text_to_send), thread_id=self.recipient)
         return "nothing to see here"
