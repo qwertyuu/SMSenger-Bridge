@@ -38,7 +38,6 @@ Once installed and running...
 4. Paste the ngrok link + /sms (looks like https://fih3ob.ngrok.io/sms) in the "A MESSAGE COMES IN" field
 
 ## Help
-
 For now, the next steps for the project are
 
 1. Make an "SMS Provider" interface for supporting more than twilio as a provider
