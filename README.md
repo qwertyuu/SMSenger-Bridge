@@ -1,16 +1,20 @@
 # SMSenger Bridge
 
-## Install instructions
+## Prerequisites
 
-First, create a virtualenv at the root of the project. 
+- A Twilio account with a static 2-way SMS-enabled phone number (the Account SID and Auth token ready for you to use)
+- A Facebook Messenger account
+
+## Install instructions
 I assume you know how to download/clone the repository.
 
+First, create a virtualenv at the root of the project. (Optional)
 ```
 cd /project/path/SMSenger-Bridge
 virtualenv .
 ```
 
-Activate the virtualenv
+Activate the virtualenv (Optional)
 ```
 ./Scripts/activate
 ```
@@ -20,9 +24,7 @@ Install the requirements using pip
 pip install -r requirements.txt
 ```
 
-Duplicate the `.env.example` file and name it `.env`. Fill all the data in it with yours.
-
-__Note: TWILIO_TO_NUMBER is usually your own cellphone number__
+Duplicate the `.env.example` file and name it `.env`. Fill all the data in it with yours. _Note: TWILIO_TO_NUMBER is your own cellphone number, not the twilio one_
 
 Finally, run `main.py`
 ```
@@ -44,3 +46,5 @@ For now, the next steps for the project are
 2. Move the direct client accesses in the listeners to message queues and queue handlers (one for TO_SMS, one for TO_MESSENGER)
 3. Find a more elegant way to put the API online than ngrok
 4. Find a cheaper SMS provider (with nice APIs available? that'd be rad. I think Amazon SNS supports SMS and is cheaper, might be useful to look into.)
+5. Add tests
+6. Add CI (Circle CI maybe?) for automatic testing
