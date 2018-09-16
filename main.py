@@ -1,42 +1,60 @@
 import pydotenv
 import threading
 from flask import Flask
-from facebookListenerClient import FacebookListenerClient
-from twilio.rest import Client as twilioClient
-from smsListener import SMSListener
+
+from BandwidthSmsHandler import BandwidthSmsHandler
+from MessengerHandler import MessengerHandler
+from TwilioSmsHandler import TwilioSmsHandler
 
 
-def sms_to_messenger(flask_listener, host, port):
+def get_sms_provider(provider_name, environment):
+    to_number = environment.get('YOUR_NUMBER')
+    if provider_name == 'bandwidth':
+        return BandwidthSmsHandler(
+            environment.get('BANDWIDTH_USER'),
+            environment.get('BANDWIDTH_TOKEN'),
+            environment.get('BANDWIDTH_SECRET'),
+            environment.get('BANDWIDTH_FROM_NUMBER'),
+            to_number
+        )
+    elif provider_name == 'twilio':
+        return TwilioSmsHandler(
+            environment.get('TWILIO_SID'),
+            environment.get('TWILIO_AUTH_TOKEN'),
+            environment.get('TWILIO_FROM_NUMBER'),
+            to_number
+        )
+    else:
+        raise ValueError('Bad SMS_PROVIDER in .env. Choices are: [bandwidth, twilio]')
+
+
+def sms_to_messenger(flask_listener, sms_handler, fb, host, port):
+    sms_handler.register_with_flask(flask)
+    sms_handler.start(fb.send_callback)
     flask_listener.run(host=host, port=port, debug=False)
 
 
-def messenger_to_sms(fb):
-    fb.listen()
+def messenger_to_sms(fb, sms_handler):
+    fb.start(sms_handler.send_callback)
 
 
 if __name__ == '__main__':
     env = pydotenv.Environment(check_file_exists=True)
 
-    from_number = env.get('TWILIO_FROM_NUMBER')
-    to_number = env.get('TWILIO_TO_NUMBER')
-
     flask = Flask(__name__)
-    tClient = twilioClient(env.get('TWILIO_SID'), env.get('TWILIO_AUTH_TOKEN'))
 
-    fbmessenger = FacebookListenerClient(
+    fbmessenger = MessengerHandler(
         env.get('MESSENGER_LOGIN'),
-        env.get('MESSENGER_PASSWORD'),
-        tClient,
-        from_number,
-        to_number
+        env.get('MESSENGER_PASSWORD')
     )
-    sms_listener = SMSListener(fbmessenger, to_number)
-    flask.add_url_rule('/sms', view_func=sms_listener.sms_event)
-    t1 = threading.Thread(target=sms_to_messenger, args=[
+    sms_listener = get_sms_provider(env.get('SMS_PROVIDER'), env)
+    sms_to_messenger_thread = threading.Thread(target=sms_to_messenger, args=[
         flask,
+        sms_listener,
+        fbmessenger,
         env.get('FLASK_HOST', None),
         env.get('FLASK_PORT', '5000')
     ])
-    t2 = threading.Thread(target=messenger_to_sms, args=[fbmessenger])
-    t1.start()
-    t2.start()
+    messenger_to_sms_thread = threading.Thread(target=messenger_to_sms, args=[fbmessenger, sms_listener])
+    sms_to_messenger_thread.start()
+    messenger_to_sms_thread.start()

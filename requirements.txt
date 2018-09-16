@@ -1,3 +1,4 @@
+bandwidth-sdk==3.0.1
 beautifulsoup4==4.6.3
 certifi==2018.8.24
 chardet==3.0.4
@@ -8,10 +9,12 @@ fuzzywuzzy==0.17.0
 idna==2.7
 itsdangerous==0.24
 Jinja2==2.10
+lxml==4.2.5
 MarkupSafe==1.0
 pydotenv==0.0.7
 PyJWT==1.6.4
 PySocks==1.6.8
+python-dateutil==2.7.3
 pytz==2018.5
 requests==2.19.1
 six==1.11.0
