@@ -49,7 +49,8 @@ Once twilio is setup...
 All the messages you are sent through facebook messenger will be sent to you via SMS (note that you pay PER SMS in twilio and PER NUMBER)
 
 If you want to talk to someone, send a message that looks like this: `@RECIPIENT NAME: Hello!`
-the `@RECIPIENT NAME: ` part can be left out if you want to send a message to the same person many times in a row.
+
+The `@RECIPIENT NAME: ` part can be left out if you want to send a message to the same person many times in a row.
 
 ## Future of the project
 For now, the next steps for the project are:
