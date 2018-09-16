@@ -34,7 +34,7 @@ if __name__ == '__main__':
     flask.add_url_rule('/sms', view_func=sms_listener.sms_event)
     t1 = threading.Thread(target=sms_to_messenger, args=[
         flask,
-        env.get('FLASK_HOST', '0.0.0.0'),
+        env.get('FLASK_HOST', None),
         env.get('FLASK_PORT', '5000')
     ])
     t2 = threading.Thread(target=messenger_to_sms, args=[fbmessenger])
