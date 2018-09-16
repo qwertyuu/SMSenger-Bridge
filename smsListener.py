@@ -5,14 +5,15 @@ import re
 
 
 class SMSListener:
-    def __init__(self, messenger):
+    def __init__(self, messenger, to_number):
         self.messenger = messenger
         self.recipient = None
+        self.to_number = to_number
 
     def sms_event(self):
-        # Add a message
         body = request.args.get('Body')
-        if body:
+        from_number = request.args.get('From')
+        if body and from_number == self.to_number:
             text_search = re.search(r"(?:^@([^:]+)\:\s?)?(.*)", body)
             user_search_term = text_search.group(1)
             text_to_send = text_search.group(2)
