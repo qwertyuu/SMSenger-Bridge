@@ -62,4 +62,3 @@ For now, the next steps for the project are:
 5. Add tests (medium priority)
 6. Add CI (Circle CI maybe?) for automatic testing (low priority)
 7. Support group chat (low priority)
-8. Make the recipient search function cleverer (it sometimes picks strangers with similar names and does not prioritize messenger contacts over facebook contacts. It can also not search for messenger-only accounts) (high priority)
