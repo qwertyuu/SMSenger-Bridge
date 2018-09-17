@@ -80,7 +80,6 @@ The `@RECIPIENT NAME: ` part can be left out if you want to send a message to th
 For now, the next steps for the project are:
 
 1. Add tests (medium priority)
-2. Add CI (Circle CI maybe?) for automatic testing (very low priority)
-3. Support group chat (low priority)
-4. Add a way to enable/disable automatically to save money on SMS usage (detect that you are connected/disconnected from elsewhere) (high priority)
-5. Add a way to enable/disable manually to save money on SMS usage (with special SMS) (high priority)
+2. Support group chat (very low priority)
+3. Add a way to enable/disable automatically to save money on SMS usage (detect that you are connected/disconnected from elsewhere) (low priority)
+4. Add a way to enable/disable manually to save money on SMS usage (with special SMS) (high priority)
