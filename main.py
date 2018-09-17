@@ -51,7 +51,7 @@ if __name__ == '__main__':
         env.get('MESSENGER_PASSWORD')
     )
     sms_listener = get_sms_provider(env.get('SMS_PROVIDER'), env)
-    middleman = SMSOutgoingMiddleman(sms_listener.send_callback)
+    middleman = SMSOutgoingMiddleman(fbmessenger.send_callback)
     sms_to_messenger_thread = threading.Thread(target=sms_to_messenger, args=[
         flask,
         sms_listener,
