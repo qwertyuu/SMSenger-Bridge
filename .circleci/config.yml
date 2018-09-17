@@ -38,3 +38,7 @@ jobs:
           paths:
             - ./venv
           key: v1-dependencies-{{ checksum "requirements.txt" }}
+
+      - run:
+          name: run unit tests
+          command: python -m unittest discover -s tests
