@@ -1,5 +1,6 @@
 import pydotenv
 import threading
+from getpass import getpass
 from flask import Flask
 
 from BandwidthSmsHandler import BandwidthSmsHandler
@@ -46,10 +47,10 @@ if __name__ == '__main__':
 
     fbmessenger = MessengerHandler(
         env.get('MESSENGER_LOGIN'),
-        env.get('MESSENGER_PASSWORD')
+        getpass('Messenger password: ')
     )
     sms_listener = get_sms_provider(env.get('SMS_PROVIDER'), env)
-    middleman = SMSOutgoingMiddleman(sms_listener.send_callback, fbmessenger.send_callback)
+    middleman = SMSOutgoingMiddleman(fbmessenger.send_callback, sms_listener.send_callback)
     sms_to_messenger_thread = threading.Thread(target=sms_to_messenger, args=[
         flask,
         sms_listener,

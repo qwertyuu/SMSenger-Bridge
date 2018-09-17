@@ -60,6 +60,8 @@ If you want to talk to someone, send a message that looks like this: `@RECIPIENT
 
 The `@RECIPIENT NAME: ` part can be left out if you want to send a message to the same person many times in a row.
 
+You can send `+MUTE` from your phone to disable SMS remotely. Send `+UNMUTE` to bring SMS back. This allows you to let the app run endlessly.
+
 ### .env file
 
 | Environment variable | Description                                                                                                                                              |

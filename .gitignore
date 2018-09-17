@@ -93,6 +93,7 @@ Include/
 Lib/
 Scripts/
 tcl/
+bin/
 
 # Spyder project settings
 .spyderproject

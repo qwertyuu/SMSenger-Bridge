@@ -18,9 +18,9 @@ class TestMiddleman(unittest.TestCase):
         messenger_sms = MagicMock()
         handler = SMSOutgoingMiddleman(sms_messenger, messenger_sms)
 
-        handler.sms_to_messenger('+DISABLE')
+        handler.sms_to_messenger('+MUTE')
         handler.messenger_to_sms('hello')
-        handler.sms_to_messenger('+ENABLE')
+        handler.sms_to_messenger('+UNMUTE')
         handler.messenger_to_sms('hey')
 
         messenger_sms.assert_called_once_with('hey')
