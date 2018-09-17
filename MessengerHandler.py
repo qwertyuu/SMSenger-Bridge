@@ -26,7 +26,7 @@ class MessengerHandler(fbChatClient):
         if author_id != self.uid:
             if author_id not in self.usernames:
                 self.usernames[author_id] = self.fetchThreadInfo(thread_id)[thread_id].name
-                self.callback("{}: {}".format(self.usernames[author_id], message_object.text))
+            self.callback("{}: {}".format(self.usernames[author_id], message_object.text))
 
     def send_callback(self, message_to_send):
         text_search = re.search(r"(?:^@([^:]+)\:\s?)?(.*)", message_to_send)
