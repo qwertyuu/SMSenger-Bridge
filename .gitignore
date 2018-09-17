@@ -112,3 +112,6 @@ tcl/
 
 # pip stuff
 pip-selfcheck.json
+
+# vscode settings
+.vscode/settings.json
