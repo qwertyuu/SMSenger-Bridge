@@ -6,9 +6,9 @@ class SMSOutgoingMiddleman:
         self.messenger_to_sms_enabled = True
 
     def sms_to_messenger(self, message):
-        if message == '+DISABLE':
+        if message == '+MUTE':
             self.messenger_to_sms_enabled = False
-        elif message == '+ENABLE':
+        elif message == '+UNMUTE':
             self.messenger_to_sms_enabled = True
         else:
             self.sms_to_messenger_callback(message)
