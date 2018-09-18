@@ -84,4 +84,3 @@ For now, the next steps for the project are:
 1. Add tests (medium priority)
 2. Support group chat (very low priority)
 3. Add a way to enable/disable automatically to save money on SMS usage (detect that you are connected/disconnected from elsewhere) (low priority)
-4. Create a middleware system to bind to SMS or Messnger events before being sent to their eventual output (better even, everything is bound to the events, even the outputs!) (low priority)

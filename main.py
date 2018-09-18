@@ -7,6 +7,7 @@ from BandwidthSmsHandler import BandwidthSmsHandler
 from MessengerHandler import MessengerHandler
 from SMSOutgoingMiddleman import SMSOutgoingMiddleman
 from TwilioSmsHandler import TwilioSmsHandler
+from PipelineHandler import PipelineHandler
 
 
 def get_sms_provider(provider_name, environment):
@@ -30,14 +31,14 @@ def get_sms_provider(provider_name, environment):
         raise ValueError('Bad SMS_PROVIDER in .env. Choices are: [bandwidth, twilio]')
 
 
-def sms_to_messenger(flask_listener, sms_handler, message_handler, host, port):
+def sms_listen(flask_listener, sms_handler, pipeline, host, port):
     sms_handler.register_with_flask(flask)
-    sms_handler.start(message_handler.sms_to_messenger)
+    sms_handler.start(pipeline.send_callback)
     flask_listener.run(host=host, port=port, debug=False)
 
 
-def messenger_to_sms(fb, message_handler):
-    fb.start(message_handler.messenger_to_sms)
+def messenger_listen(fb, pipeline):
+    fb.start(pipeline.send_callback)
 
 
 if __name__ == '__main__':
@@ -50,14 +51,24 @@ if __name__ == '__main__':
         getpass('Messenger password: ')
     )
     sms_listener = get_sms_provider(env.get('SMS_PROVIDER'), env)
-    middleman = SMSOutgoingMiddleman(fbmessenger.send_callback, sms_listener.send_callback)
-    sms_to_messenger_thread = threading.Thread(target=sms_to_messenger, args=[
+    middleman = SMSOutgoingMiddleman()
+
+    sms_event_pipeline = PipelineHandler([
+        middleman.sms_to_messenger,
+        fbmessenger.send_callback
+    ])
+    messenger_event_pipeline = PipelineHandler([
+        middleman.messenger_to_sms,
+        sms_listener.send_callback
+    ])
+
+    sms_listen_thread = threading.Thread(target=sms_listen, args=[
         flask,
         sms_listener,
-        middleman,
+        sms_event_pipeline,
         env.get('FLASK_HOST', None),
         env.get('FLASK_PORT', '5000')
     ])
-    messenger_to_sms_thread = threading.Thread(target=messenger_to_sms, args=[fbmessenger, middleman])
-    sms_to_messenger_thread.start()
-    messenger_to_sms_thread.start()
+    messenger_listen_thread = threading.Thread(target=messenger_listen, args=[fbmessenger, messenger_event_pipeline])
+    sms_listen_thread.start()
+    messenger_listen_thread.start()
