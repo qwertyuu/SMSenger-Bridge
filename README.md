@@ -7,8 +7,13 @@
 
 ## Prerequisites
 
-- A Twilio account with a static 2-way SMS-enabled phone number (the Account SID and Auth token ready for you to use)
+- A Bandwidth.com account with a static 2-way SMS-enabled phone number (the User ID, User Token and Token Secret ready to use) (it's cheaper than Twilio!)
+
+OR
+
+- A Twilio.com account with a static 2-way SMS-enabled phone number (the Account SID and Auth token ready for you to use)
 - A Facebook Messenger account
+- Python 3+ (and the requirements in requirements.txt)
 
 ## Install instructions
 I assume you know how to download/clone the repository.
@@ -62,7 +67,7 @@ The `@RECIPIENT NAME: ` part can be left out if you want to send a message to th
 
 You can send `+MUTE` from your phone to disable SMS remotely. Send `+UNMUTE` to bring SMS back. This allows you to let the app run endlessly.
 
-### .env file
+## Environment file (.env)
 
 | Environment variable | Description                                                                                                                                              |
 |----------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------|
