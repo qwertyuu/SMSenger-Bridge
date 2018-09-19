@@ -41,4 +41,15 @@ jobs:
 
       - run:
           name: run unit tests
-          command: python -m unittest discover -s tests
+          command: |
+            coverage run -m unittest discover -s tests
+
+      - run:
+          name: Generate code coverage report
+          command: |
+            coverage report --skip-covered
+            coverage html
+          when: always
+      
+      - store_artifacts:
+          path: htmlcov

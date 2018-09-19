@@ -116,3 +116,4 @@ pip-selfcheck.json
 
 # vscode settings
 .vscode/settings.json
+htmlcov
