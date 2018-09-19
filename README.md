@@ -69,18 +69,20 @@ You can send `+MUTE` from your phone to disable SMS remotely. Send `+UNMUTE` to 
 
 ## Environment file (.env)
 
-| Environment variable | Description                                                                                                                                              |
-|----------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------|
-| SMS_PROVIDER         | The third-party SMS provider you wish to use. Either 'twilio' or 'bandwidth' for the moment.                                                             |
-| BANDWIDTH_USER       | Bandwidth User ID found in the account tab (use only if SMS_PROVIDER is set to bandwidth)                                                                |
-| BANDWIDTH_TOKEN      | Bandwidth token found in the account tab (use only if SMS_PROVIDER is set to bandwidth)                                                                  |
-| BANDWIDTH_SECRET     | Bandwidth secret found in the account tab (use only if SMS_PROVIDER is set to bandwidth)                                                                 |
-| TWILIO_SID           | Twilio SID (use only if SMS_PROVIDER is set to twilio)                                                                                                   |
-| TWILIO_AUTH_TOKEN    | Twilio Auth Token (use only if SMS_PROVIDER is set to twilio)                                                                                            |
-| YOUR_NUMBER          | The phone number you want to chat with. Will be used to notify and to check for incoming SMS. Should be a "long code" (+18473920495)                     |
-| MESSENGER_LOGIN      | Your facebook messenger login (usually an e-mail address)                                                                                                |
-| FLASK_HOST           | Set this to '0.0.0.0' in order to make your application public and respond to HTTP requests. You can also use ngrok instead of this. Optional parameter. |
-| FLASK_PORT           | Port to use for hosting the web server. Optional parameter, will be 5000 if left out.                                                                    |
+| Environment variable  | Description                                                                                                                                              |
+|-----------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------|
+| SMS_PROVIDER          | The third-party SMS provider you wish to use. Either 'twilio' or 'bandwidth' for the moment.                                                             |
+| BANDWIDTH_USER        | Bandwidth User ID found in the account tab (use only if SMS_PROVIDER is set to bandwidth)                                                                |
+| BANDWIDTH_TOKEN       | Bandwidth token found in the account tab (use only if SMS_PROVIDER is set to bandwidth)                                                                  |
+| BANDWIDTH_SECRET      | Bandwidth secret found in the account tab (use only if SMS_PROVIDER is set to bandwidth)                                                                 |
+| BANDWIDTH_FROM_NUMBER | Your own bandwidth number. The one you bought                                                                                                            |
+| TWILIO_SID            | Twilio SID (use only if SMS_PROVIDER is set to twilio)                                                                                                   |
+| TWILIO_AUTH_TOKEN     | Twilio Auth Token (use only if SMS_PROVIDER is set to twilio)                                                                                            |
+| TWILIO_FROM_NUMBER    | Your own twilio number. The one you bought                                                                                                               |
+| YOUR_NUMBER           | The phone number you want to chat with. Will be used to notify and to check for incoming SMS. Should be a "long code" (+18473920495)                     |
+| MESSENGER_LOGIN       | Your facebook messenger login (usually an e-mail address)                                                                                                |
+| FLASK_HOST            | Set this to '0.0.0.0' in order to make your application public and respond to HTTP requests. You can also use ngrok instead of this. Optional parameter. |
+| FLASK_PORT            | Port to use for hosting the web server. Optional parameter, will be 5000 if left out.                                                                    |
 
 ## Future of the project
 For now, the next steps for the project are:
