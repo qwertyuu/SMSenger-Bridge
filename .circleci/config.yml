@@ -42,11 +42,13 @@ jobs:
       - run:
           name: run unit tests
           command: |
+            . venv/bin/activate
             python3 -m coverage run -m unittest discover -s tests
 
       - run:
           name: Generate code coverage report
           command: |
+            . venv/bin/activate
             python3 -m coverage report --skip-covered
             python3 -m coverage html
           when: always
