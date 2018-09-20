@@ -30,7 +30,7 @@ jobs:
       - run:
           name: install dependencies
           command: |
-            python3 -m venv venv
+            python -m venv venv
             . venv/bin/activate
             pip install -r requirements.txt
 
@@ -42,13 +42,13 @@ jobs:
       - run:
           name: run unit tests
           command: |
-            python -m coverage run -m unittest discover -s tests
+            python3 -m coverage run -m unittest discover -s tests
 
       - run:
           name: Generate code coverage report
           command: |
-            python -m coverage report --skip-covered
-            python -m coverage html
+            python3 -m coverage report --skip-covered
+            python3 -m coverage html
           when: always
       
       - store_artifacts:
