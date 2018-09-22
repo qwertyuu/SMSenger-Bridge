@@ -58,5 +58,7 @@ jobs:
 
       - run:
           name: Upload code coverage results to Codecov
-          command: bash <(curl -s https://codecov.io/bash)
+          command: |
+            . venv/bin/activate
+            bash <(curl -s https://codecov.io/bash)
           when: always
