@@ -30,7 +30,7 @@ jobs:
       - run:
           name: install dependencies
           command: |
-            python3 -m venv venv
+            python -m venv venv
             . venv/bin/activate
             pip install -r requirements.txt
 
@@ -41,4 +41,24 @@ jobs:
 
       - run:
           name: run unit tests
-          command: python -m unittest discover -s tests
+          command: |
+            . venv/bin/activate
+            python3 -m coverage run -m unittest discover -s tests
+
+      - run:
+          name: Generate code coverage report
+          command: |
+            . venv/bin/activate
+            python3 -m coverage report --skip-covered
+            python3 -m coverage html
+          when: always
+      
+      - store_artifacts:
+          path: htmlcov
+
+      - run:
+          name: Upload code coverage results to Codecov
+          command: |
+            . venv/bin/activate
+            bash <(curl -s https://codecov.io/bash)
+          when: always
