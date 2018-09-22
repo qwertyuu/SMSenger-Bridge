@@ -87,6 +87,7 @@ You can send `+MUTE` from your phone to disable SMS remotely. Send `+UNMUTE` to 
 ## Future of the project
 For now, the next steps for the project are:
 
-1. Add tests (medium priority)
-2. Support group chat (very low priority)
-3. Add a way to enable/disable automatically to save money on SMS usage (detect that you are connected/disconnected from elsewhere) (low priority)
+1. Support group chat (very low priority)
+2. Add a way to enable/disable automatically to save money on SMS usage (detect that you are connected/disconnected from elsewhere) (low priority)
+3. Add a way to ping the service in order to see if it's still alive if not connected to the internet (low priority)
+4. Add a way to retrieve messages from N minutes in the past (if you think you missed on any messages and did not +UNMUTE) (medium priority)
