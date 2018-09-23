@@ -1,5 +1,8 @@
 # SMSenger Bridge
 
+[![CircleCI](https://circleci.com/gh/qwertyuu/SMSenger-Bridge.svg?style=svg)](https://circleci.com/gh/qwertyuu/SMSenger-Bridge)
+[![Codecov](https://img.shields.io/codecov/c/github/codecov/example-python.svg)](https://codecov.io/gh/qwertyuu/SMSenger-Bridge)
+
 ## Example
 
 ![Preview1](./images/woebot.jpg)
