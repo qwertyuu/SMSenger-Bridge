@@ -48,7 +48,7 @@ if __name__ == '__main__':
 
     fbmessenger = MessengerHandler(
         env.get('MESSENGER_LOGIN'),
-        getpass('Messenger password: ')
+        env.get('MESSENGER_PASSWORD')
     )
     sms_listener = get_sms_provider(env.get('SMS_PROVIDER'), env)
     middleman = SMSOutgoingMiddleman()
