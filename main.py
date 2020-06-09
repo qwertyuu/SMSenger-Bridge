@@ -1,31 +1,29 @@
-import pydotenv
 import threading
-from getpass import getpass
 from flask import Flask
-
 from BandwidthSmsHandler import BandwidthSmsHandler
-from MessengerHandler import MessengerHandler
-from SMSOutgoingMiddleman import SMSOutgoingMiddleman
+from MessengerDispatch import MessengerDispatch
+import SMSMuteControls
+from SMSAuth import SMSAuth
+from SMSFacebookRepository import SMSFacebookRepository
 from TwilioSmsHandler import TwilioSmsHandler
 from PipelineHandler import PipelineHandler
+import os
+from dotenv import load_dotenv
 
 
-def get_sms_provider(provider_name, environment):
-    to_number = environment.get('YOUR_NUMBER')
+def get_sms_provider(provider_name):
     if provider_name == 'bandwidth':
         return BandwidthSmsHandler(
-            environment.get('BANDWIDTH_USER'),
-            environment.get('BANDWIDTH_TOKEN'),
-            environment.get('BANDWIDTH_SECRET'),
-            environment.get('BANDWIDTH_FROM_NUMBER'),
-            to_number
+            os.getenv('BANDWIDTH_USER'),
+            os.getenv('BANDWIDTH_TOKEN'),
+            os.getenv('BANDWIDTH_SECRET'),
+            os.getenv('BANDWIDTH_FROM_NUMBER'),
         )
     elif provider_name == 'twilio':
         return TwilioSmsHandler(
-            environment.get('TWILIO_SID'),
-            environment.get('TWILIO_AUTH_TOKEN'),
-            environment.get('TWILIO_FROM_NUMBER'),
-            to_number
+            os.getenv('TWILIO_SID'),
+            os.getenv('TWILIO_AUTH_TOKEN'),
+            os.getenv('TWILIO_FROM_NUMBER'),
         )
     else:
         raise ValueError('Bad SMS_PROVIDER in .env. Choices are: [bandwidth, twilio]')
@@ -42,33 +40,24 @@ def messenger_listen(fb, pipeline):
 
 
 if __name__ == '__main__':
-    env = pydotenv.Environment(check_file_exists=True)
+    load_dotenv()
 
     flask = Flask(__name__)
+    sms_listener = get_sms_provider(os.getenv('SMS_PROVIDER'))
 
-    fbmessenger = MessengerHandler(
-        env.get('MESSENGER_LOGIN'),
-        env.get('MESSENGER_PASSWORD')
-    )
-    sms_listener = get_sms_provider(env.get('SMS_PROVIDER'), env)
-    middleman = SMSOutgoingMiddleman()
+    auth = SMSAuth(SMSFacebookRepository(), sms_listener, messenger_listen)
 
     sms_event_pipeline = PipelineHandler([
-        middleman.sms_to_messenger,
-        fbmessenger.send_callback
-    ])
-    messenger_event_pipeline = PipelineHandler([
-        middleman.messenger_to_sms,
-        sms_listener.send_callback
+        auth.receive_sms,
+        SMSMuteControls.receive_sms,
+        MessengerDispatch().send_message
     ])
 
     sms_listen_thread = threading.Thread(target=sms_listen, args=[
         flask,
         sms_listener,
         sms_event_pipeline,
-        env.get('FLASK_HOST', None),
-        env.get('FLASK_PORT', '5000')
+        os.getenv('FLASK_HOST', None),
+        os.getenv('FLASK_PORT', '5000')
     ])
-    messenger_listen_thread = threading.Thread(target=messenger_listen, args=[fbmessenger, messenger_event_pipeline])
     sms_listen_thread.start()
-    messenger_listen_thread.start()
