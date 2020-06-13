@@ -13,9 +13,7 @@ class MessengerDispatch:
 
         if user_search_term is not None:
             # TODO: Add memory to call the fetchAllUsers endpoint less often
-            users = {user.uid: user.name for user in client.fetchAllUsers()}
-            search_result = process.extractOne(user_search_term, users)
-            user_id = search_result[2]
-            if user_id:
-                client.recipient = user_id
+            contacts = client.searchForContacts(user_search_term)
+            if len(contacts):
+                client.recipient = contacts[0].uid
         client.send(Message(text=text_to_send), thread_id=client.recipient)
