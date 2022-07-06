@@ -10,7 +10,7 @@ fuzzywuzzy==0.17.0
 idna==2.7
 itsdangerous==0.24
 Jinja2>=2.10.1
-lxml==4.2.5
+lxml==4.9.1
 MarkupSafe==1.0
 pydotenv==0.0.7
 PyJWT==1.6.4
